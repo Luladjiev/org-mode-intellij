@@ -49,6 +49,7 @@
         <additionalTextAttributes scheme="Default" file="colorSchemes/OrgDefault.xml"/>
         <additionalTextAttributes scheme="Darcula" file="colorSchemes/OrgDarcula.xml"/>
         <lang.foldingBuilder language="Org" implementationClass="com.luladjiev.orgmode.folding.OrgFoldingBuilder"/>
+        <editorFactoryMouseListener implementation="com.luladjiev.orgmode.folding.OrgGutterMouseListener"/>
         <lang.psiStructureViewFactory language="Org"
                                       implementationClass="com.luladjiev.orgmode.structure.OrgStructureViewFactory"/>
 
@@ -90,6 +91,7 @@
             <action id="org.mode.DemoteHeading" class="com.luladjiev.orgmode.actions.DemoteHeadingAction"/>
             <action id="org.mode.PromoteSubtree" class="com.luladjiev.orgmode.actions.PromoteSubtreeAction"/>
             <action id="org.mode.DemoteSubtree" class="com.luladjiev.orgmode.actions.DemoteSubtreeAction"/>
+            <action id="org.mode.CycleLevel" class="com.luladjiev.orgmode.actions.CycleLevelAction"/>
             <action id="org.mode.MoveSubtreeUp" class="com.luladjiev.orgmode.actions.MoveSubtreeUpAction"/>
             <action id="org.mode.MoveSubtreeDown" class="com.luladjiev.orgmode.actions.MoveSubtreeDownAction"/>
             <separator/>

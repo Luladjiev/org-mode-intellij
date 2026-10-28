@@ -35,8 +35,9 @@ fails on any difference not listed here, or on a listed one that no longer diffe
 | Several carets | — (Emacs has one point) | each Heading or checkbox changes once, one undo step | Several carets are an IDE feature. |
 
 Visibility cycling has the same three states as Emacs, but reads the current state from the editor's folds instead of
-the previous command, and drawers are not re-folded when a Subtree is shown (`docs/decisions/0004`). Blank lines that
-end a Subtree stay visible when it is folded. Shift+TAB cycles the document only from a Heading line, so it still
+the previous command, and drawers are not re-folded when a Subtree is shown (`docs/decisions/0004`). Blank lines
+before the next Heading fold with a Subtree as in Emacs `org-cycle-separator-lines` (default 2, set in Settings), and
+blank lines that end the file always stay visible. Shift+TAB cycles the document only from a Heading line, so it still
 unindents elsewhere.
 
 ## Editor highlighting

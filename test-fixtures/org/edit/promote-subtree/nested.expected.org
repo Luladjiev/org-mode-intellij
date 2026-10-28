@@ -1,0 +1,13 @@
+* Root
+* Ta<caret>rget
+  indented body
+** Child
+#+BEGIN_SRC org
+,* not a heading
+#+END_SRC
+**** Skipped level
+** Second child :tag:
+
+
+** Sibling
+*** Not moved
