@@ -1,0 +1,13 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- An Org outline: a level-1 Heading and two level-2 Headings, each level in its own color as in Org. -->
+    <g stroke-linecap="round">
+        <path d="M8 7.5V14.5M4.97 9.25L11.03 12.75M4.97 12.75L11.03 9.25" stroke="#3C8C7A" stroke-width="2.5"/>
+        <path d="M15 17V23M12.40 18.5L17.60 21.5M12.40 21.5L17.60 18.5" stroke="#D98A2B" stroke-width="2"/>
+        <path d="M15 26V32M12.40 27.5L17.60 30.5M12.40 30.5L17.60 27.5" stroke="#D98A2B" stroke-width="2"/>
+    </g>
+    <g fill="#6C707E">
+        <rect x="14" y="9" width="21" height="4" rx="2"/>
+        <rect x="21" y="18" width="14" height="4" rx="2"/>
+        <rect x="21" y="27" width="10" height="4" rx="2"/>
+    </g>
+</svg>
