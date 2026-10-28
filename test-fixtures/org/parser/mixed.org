@@ -1,0 +1,33 @@
+#+TITLE: Weekly notes
+#+FILETAGS: :notes:
+#+TODO: TODO NEXT | DONE
+
+* NEXT [#A] Review the parser design :design:
+SCHEDULED: <2026-10-28 Wed 10:00 +1w>
+:PROPERTIES:
+:ID: 0a1b2c3d
+:END:
+The parser builds trees through a ~TreeBuilder~.
+
+** DONE Read the [[https://orgmode.org/worg/org-syntax.html][Org Syntax]] spec
+CLOSED: [2026-10-26 Mon 17:30]
+- [X] Headings
+- [ ] Lists
+  1. Bullets
+  2. Checkboxes
+
+#+BEGIN_SRC kotlin
+val tree = SyntaxTree.parse(text)
+#+END_SRC
+
+** TODO Unknown constructs stay text
+#+CUSTOM_DIRECTIVE: kept as a keyword
+An export snippet @@html:<b>@@, a target <<here>> and a line break\\
+end the paragraph only at a blank line.
+
+#+RESULTS:
+: 42
+
+* Meetings :work:
+** Planning <2026-10-29 Thu 14:00-15:00>
+- Ünïcödé text and emoji 🚀 are fine

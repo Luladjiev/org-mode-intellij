@@ -1,0 +1,101 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.luladjiev.org-mode</id>
+
+    <!-- Public plugin name should be written in Title Case.
+     Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-name -->
+    <name>Org Mode</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor>Peter Luladjiev</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
+    <description><![CDATA[
+        <p>Native Org-mode support for IntelliJ-based IDEs, no Emacs required. Edit, fold, navigate and restructure
+        <code>.org</code> files; they stay plain Org text that Emacs reads as before.</p>
+        <ul>
+          <li>Highlighting of Headings, TODO Keywords, priorities, tags, links and markup, following your color scheme</li>
+          <li>Folding with Emacs-style TAB and Shift+TAB visibility cycling on Heading lines</li>
+          <li>Structure View of the outline</li>
+          <li>Promote and demote Headings or Subtrees, move Subtrees, cycle TODO Keywords, toggle checkboxes, each one
+          undoable step that changes only the lines it must</li>
+          <li>Heading navigation: next, previous, sibling, parent</li>
+          <li>Optional IdeaVim mappings (<code>&lt;leader&gt;o…</code> and remappable <code>&lt;Plug&gt;(org-…)</code>
+          commands), turned on in Settings or with <code>set orgmode</code></li>
+        </ul>
+        <p>All commands are under Code | Org Mode. Agenda, Capture, Refile, scheduling and Babel are not in this
+        version yet.</p>
+        ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+    <!-- Optional IdeaVim adapter; the plugin works without it. -->
+    <depends optional="true" config-file="org-mode-ideavim.xml">IdeaVIM</depends>
+
+
+    <!-- Extensions defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Org" implementationClass="com.luladjiev.orgmode.lang.OrgFileType" fieldName="INSTANCE"
+                  language="Org" extensions="org"/>
+        <lang.parserDefinition language="Org" implementationClass="com.luladjiev.orgmode.lang.OrgParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Org"
+                                       implementationClass="com.luladjiev.orgmode.highlighting.OrgSyntaxHighlighterFactory"/>
+        <annotator language="Org" implementationClass="com.luladjiev.orgmode.highlighting.OrgAnnotator"/>
+        <colorSettingsPage implementation="com.luladjiev.orgmode.highlighting.OrgColorSettingsPage"/>
+        <additionalTextAttributes scheme="Default" file="colorSchemes/OrgDefault.xml"/>
+        <additionalTextAttributes scheme="Darcula" file="colorSchemes/OrgDarcula.xml"/>
+        <lang.foldingBuilder language="Org" implementationClass="com.luladjiev.orgmode.folding.OrgFoldingBuilder"/>
+        <lang.psiStructureViewFactory language="Org"
+                                      implementationClass="com.luladjiev.orgmode.structure.OrgStructureViewFactory"/>
+
+        <!-- TAB, Shift+TAB and Move Statement act on Headings in Org editors and fall through everywhere else. -->
+        <editorActionHandler action="EditorTab" order="first"
+                             implementationClass="com.luladjiev.orgmode.editor.OrgTabHandler"/>
+        <editorActionHandler action="EditorUnindentSelection" order="first"
+                             implementationClass="com.luladjiev.orgmode.editor.OrgShiftTabHandler"/>
+        <editorActionHandler action="MoveStatementUp" order="first"
+                             implementationClass="com.luladjiev.orgmode.editor.OrgMoveStatementUpHandler"/>
+        <editorActionHandler action="MoveStatementDown" order="first"
+                             implementationClass="com.luladjiev.orgmode.editor.OrgMoveStatementDownHandler"/>
+
+        <applicationConfigurable parentId="language" id="org.mode.settings"
+                                 instance="com.luladjiev.orgmode.settings.OrgSettingsConfigurable"
+                                 key="settings.display.name" bundle="messages.OrgBundle"/>
+    </extensions>
+
+    <extensionPoints>
+        <!-- Lets org-ideavim report IdeaVim's Insert mode without org-intellij depending on IdeaVim. -->
+        <extensionPoint name="insertModeProvider" interface="com.luladjiev.orgmode.editor.OrgInsertModeProvider"
+                        dynamic="true"/>
+    </extensionPoints>
+
+    <actions resource-bundle="messages.OrgBundle">
+        <group id="org.mode.Menu" class="com.luladjiev.orgmode.actions.OrgActionGroup" popup="true">
+            <add-to-group group-id="CodeMenu" anchor="last"/>
+            <action id="org.mode.CycleVisibility" class="com.luladjiev.orgmode.actions.CycleVisibilityAction"/>
+            <action id="org.mode.CycleGlobalVisibility"
+                    class="com.luladjiev.orgmode.actions.CycleGlobalVisibilityAction"/>
+            <separator/>
+            <action id="org.mode.NextHeading" class="com.luladjiev.orgmode.actions.NextHeadingAction"/>
+            <action id="org.mode.PreviousHeading" class="com.luladjiev.orgmode.actions.PreviousHeadingAction"/>
+            <action id="org.mode.NextSibling" class="com.luladjiev.orgmode.actions.NextSiblingAction"/>
+            <action id="org.mode.PreviousSibling" class="com.luladjiev.orgmode.actions.PreviousSiblingAction"/>
+            <action id="org.mode.ParentHeading" class="com.luladjiev.orgmode.actions.ParentHeadingAction"/>
+            <separator/>
+            <action id="org.mode.PromoteHeading" class="com.luladjiev.orgmode.actions.PromoteHeadingAction"/>
+            <action id="org.mode.DemoteHeading" class="com.luladjiev.orgmode.actions.DemoteHeadingAction"/>
+            <action id="org.mode.PromoteSubtree" class="com.luladjiev.orgmode.actions.PromoteSubtreeAction"/>
+            <action id="org.mode.DemoteSubtree" class="com.luladjiev.orgmode.actions.DemoteSubtreeAction"/>
+            <action id="org.mode.MoveSubtreeUp" class="com.luladjiev.orgmode.actions.MoveSubtreeUpAction"/>
+            <action id="org.mode.MoveSubtreeDown" class="com.luladjiev.orgmode.actions.MoveSubtreeDownAction"/>
+            <separator/>
+            <action id="org.mode.CycleTodo" class="com.luladjiev.orgmode.actions.CycleTodoAction"/>
+            <action id="org.mode.ToggleCheckbox" class="com.luladjiev.orgmode.actions.ToggleCheckboxAction"/>
+        </group>
+    </actions>
+
+</idea-plugin>
