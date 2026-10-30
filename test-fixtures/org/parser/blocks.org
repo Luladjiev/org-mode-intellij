@@ -1,0 +1,58 @@
+#+BEGIN_SRC kotlin :results output
+fun main() {
+    println("*not bold*")
+}
+#+END_SRC
+
+#+begin_src emacs-lisp
+(message "lowercase")
+,* escaped heading
+#+end_src
+
+#+BEGIN_EXAMPLE
+  *bold* is not markup here
+#+END_EXAMPLE
+
+#+BEGIN_QUOTE
+Quoted paragraph.
+
+- a list in a quote
+#+END_QUOTE
+
+#+BEGIN_CENTER
+Centered.
+#+END_CENTER
+
+#+BEGIN_VERSE
+  Roses are red
+#+END_VERSE
+
+#+BEGIN_EXPORT html
+<b>raw</b>
+#+END_EXPORT
+
+#+BEGIN_COMMENT
+Not exported.
+#+END_COMMENT
+
+#+BEGIN_NOTE
+A special block.
+#+END_NOTE
+
+#+BEGIN_SRC
+#+END_SRC
+
+  #+BEGIN_SRC sh
+  echo indented
+  #+END_SRC
+
+#+BEGIN_SRC python
+print("unterminated")
+* Heading ends the unterminated block
+#+BEGIN_QUOTE
+Unterminated quote.
+* Another Heading
+#+END_QUOTE
+#+BEGIN_SRC sh
+mismatched end
+#+END_EXAMPLE

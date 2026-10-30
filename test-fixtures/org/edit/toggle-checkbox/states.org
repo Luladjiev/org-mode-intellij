@@ -1,0 +1,5 @@
+- [ ] <caret>a
+- [X] <caret>b
+- [x] <caret>c
+- [-] <caret>d
+- <caret>e

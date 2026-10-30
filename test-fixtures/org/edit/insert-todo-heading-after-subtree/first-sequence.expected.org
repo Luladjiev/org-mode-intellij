@@ -1,0 +1,4 @@
+#+TODO: TODO | DONE
+#+TODO: BUG | FIXED
+* FIXED A
+* TODO <caret>
