@@ -144,6 +144,25 @@ class OrgVimExtension : VimExtension {
     }
 
     /**
+     * Inserts a Heading from Normal or Insert mode and leaves the editor in Insert mode at its end, as Doom Emacs's
+     * `C-RET` does in Normal mode.
+     */
+    private class InsertHeadingHandler(plugName: String, actionId: String) : ActionHandler(plugName, actionId) {
+        override val modes: Set<MappingMode> = NORMAL_INSERT
+
+        override fun perform(editor: VimEditor, context: ExecutionContext, file: OrgFile, count: Int): Boolean {
+            val document = editor.ij.document
+            val stamp = document.modificationStamp
+            val normal = editor.mode.toMappingMode() == MappingMode.NORMAL
+            super.perform(editor, context, file, count)
+            if (normal && document.modificationStamp != stamp) {
+                executeNormalWithoutMapping(injector.parser.parseKeys("A"), editor.ij)
+            }
+            return true
+        }
+    }
+
+    /**
      * Moves each caret [count] Headings along [motion], as far as it can, and records a jump like Vim's `[[` and
      * `]]` do, so `<C-o>` returns. With no Heading to move to, nothing happens. In Visual mode the move extends the
      * selection. There is no Operator-pending mapping: IdeaVim gives an extension motion only a characterwise range,
@@ -184,6 +203,9 @@ class OrgVimExtension : VimExtension {
                 EnumSet.of(MappingMode.INSERT),
                 OrgSnapshot::isAtEndOfEmptyHeading,
             ),
+            // Emacs C-RET and C-S-RET (`org-insert-heading-respect-content`, `org-insert-todo-heading-respect-content`).
+            InsertHeadingHandler("org-insert-heading-after-subtree", "org.mode.InsertHeadingAfterSubtree"),
+            InsertHeadingHandler("org-insert-todo-heading-after-subtree", "org.mode.InsertTodoHeadingAfterSubtree"),
             ActionHandler("org-move-subtree-up", "org.mode.MoveSubtreeUp"),
             ActionHandler("org-move-subtree-down", "org.mode.MoveSubtreeDown"),
             ActionHandler("org-cycle-visibility", "org.mode.CycleVisibility"),

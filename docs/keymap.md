@@ -19,6 +19,8 @@ so keymaps and `.ideavimrc` files can rely on it.
 | Promote Subtree | `org.mode.PromoteSubtree` | | `M-S-←` | |
 | Demote Subtree | `org.mode.DemoteSubtree` | | `M-S-→` | |
 | Cycle Level | `org.mode.CycleLevel` | TAB at the end of an empty Heading | `TAB` | `(org-cycle-level)` |
+| Insert Heading After Subtree | `org.mode.InsertHeadingAfterSubtree` | | `C-RET` | `(org-insert-heading-after-subtree)` |
+| Insert TODO Heading After Subtree | `org.mode.InsertTodoHeadingAfterSubtree` | | `C-S-RET` | `(org-insert-todo-heading-after-subtree)` |
 | Move Subtree Up | `org.mode.MoveSubtreeUp` | Move Statement Up on a Heading line | `M-↑` | `(org-move-subtree-up)` |
 | Move Subtree Down | `org.mode.MoveSubtreeDown` | Move Statement Down on a Heading line | `M-↓` | `(org-move-subtree-down)` |
 | Cycle TODO | `org.mode.CycleTodo` | | `C-c C-t` | `(org-cycle-todo)` |
@@ -32,6 +34,10 @@ so keymaps and `.ideavimrc` files can rely on it.
 - **Cycle Level** works only at the end of an empty Heading (stars and maybe a TODO Keyword), as Emacs
   `org-cycle-level`: compared with the Heading before it, each press makes it a child, then moves it up through the
   ancestors' levels, then back to a sibling. TAB does it even with TAB cycling turned off in Settings.
+- **Insert Heading After Subtree** adds a Heading at the level of the Subtree around the caret, after all of it, and
+  puts the caret on it (Emacs `org-insert-heading-respect-content`); before the first Heading it adds a level-1
+  Heading in front of it. The TODO variant gives it the current Heading's TODO Keyword, or the first keyword of the
+  first TODO Sequence when the current one is done or has none.
 - **Move Subtree** swaps the Subtree with its previous or next sibling and never moves it out of its parent.
 - With several carets, **Cycle TODO** and **Toggle Checkbox** act once per Heading or checkbox; the structural commands
   are refused.
@@ -93,6 +99,19 @@ Doom Emacs's Insert-mode Tab and Shift+Tab are these two mapped to Tab and Shift
 imap <Tab> <Plug>(org-demote-heading)
 imap <S-Tab> <Plug>(org-promote-heading)
 ```
+
+The insert-Heading `<Plug>`s work in Normal and Insert mode and always leave you in Insert mode on the new Heading, as
+Doom Emacs's Ctrl+Enter does. For Emacs's keys:
+
+```vim
+nmap <C-CR> <Plug>(org-insert-heading-after-subtree)
+imap <C-CR> <Plug>(org-insert-heading-after-subtree)
+nmap <C-S-CR> <Plug>(org-insert-todo-heading-after-subtree)
+imap <C-S-CR> <Plug>(org-insert-todo-heading-after-subtree)
+```
+
+If Ctrl+Enter still runs the IDE's action (Split Line, or Generate on macOS), choose Vim for it in Settings | Editor |
+Vim.
 
 ### Outside Org files
 

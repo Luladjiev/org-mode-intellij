@@ -109,7 +109,7 @@ object OrgCommands {
             for (edit in applied.edits.sortedByDescending { it.start }) {
                 document.replaceString(edit.start, edit.end, edit.replacement)
             }
-            if (moveCaret) editor.caretModel.moveToOffset(applied.mapOffset(caret))
+            if (moveCaret) editor.caretModel.moveToOffset(applied.caret ?: applied.mapOffset(caret))
         }
         if (folded.isNotEmpty()) {
             OrgVisibility.updateRegions(editor)

@@ -158,6 +158,14 @@ class OrgEditTest {
         assertRefused(Refusal.NOT_AT_EMPTY_HEADING, StructureEdits.cycleLevel(snapshot("* A\n** B"), 9))
     }
 
+    @Test
+    fun `new Headings keep windows line endings`() {
+        val text = "* A\r\nbody\r\n\r\n* B\r\n"
+        val result = assertInstanceOf(EditResult.Applied::class.java, StructureEdits.insertHeadingAfterSubtree(snapshot(text), 1))
+        assertEquals("* A\r\nbody\r\n\r\n* \r\n\r\n* B\r\n", result.edits.applyTo(text))
+        assertEquals("* A\r\nbody\r\n\r\n* ".length, result.caret)
+    }
+
     private fun snapshot(text: String) = OrgSnapshot.parse(text)
 
     private fun applied(result: EditResult, text: String) =

@@ -52,7 +52,7 @@ abstract class OrgEditorAction : DumbAwareAction() {
     protected val name: String get() = templatePresentation.text
 }
 
-/** Promotion, demotion and moves: one caret only, acting on the Subtree around it. */
+/** Promotion, demotion, moves and new Headings: one caret only, acting on the Subtree around it. */
 abstract class StructureAction(private val edit: (OrgSnapshot, Int) -> EditResult) : OrgEditorAction() {
     override fun perform(editor: Editor, file: OrgFile) {
         if (!OrgCommands.checkSingleCaret(editor)) return
@@ -73,6 +73,14 @@ class CycleLevelAction : StructureAction(StructureEdits::cycleLevel)
 class MoveSubtreeUpAction : StructureAction(StructureEdits::moveSubtreeUp)
 
 class MoveSubtreeDownAction : StructureAction(StructureEdits::moveSubtreeDown)
+
+class InsertHeadingAfterSubtreeAction : StructureAction({ snapshot, offset ->
+    StructureEdits.insertHeadingAfterSubtree(snapshot, offset)
+})
+
+class InsertTodoHeadingAfterSubtreeAction : StructureAction({ snapshot, offset ->
+    StructureEdits.insertHeadingAfterSubtree(snapshot, offset, todo = true)
+})
 
 /** Applies once per distinct Heading or checkbox under any caret, as one undo step. */
 abstract class AllCaretsAction(private val edit: (OrgSnapshot, List<Int>) -> EditResult) : OrgEditorAction() {

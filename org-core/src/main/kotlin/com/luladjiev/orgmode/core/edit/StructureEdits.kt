@@ -1,9 +1,10 @@
 package com.luladjiev.orgmode.core.edit
 
 import com.luladjiev.orgmode.core.edit.OrgSnapshot.OutlineHeading
+import com.luladjiev.orgmode.core.parser.TodoSequences
 
 /**
- * Promotion, demotion and Subtree moves. Each operation targets the Heading of the
+ * Promotion, demotion, Subtree moves and new Headings. Each operation targets the Heading of the
  * Subtree containing the offset, so it works from anywhere in the Subtree, and changes only the stars it must.
  */
 object StructureEdits {
@@ -48,6 +49,44 @@ object StructureEdits {
             TextEdit(start, start + level - target, "")
         }
         return EditResult.Applied(listOf(edit))
+    }
+
+    /**
+     * Inserts a Heading at the level of the Subtree containing the offset, after that Subtree, and puts the caret on it
+     * (Emacs `org-insert-heading-respect-content`). Before the first Heading, it inserts a level-1 Heading in front of
+     * it. When the Subtree ends with blank lines and a Heading follows, the new Heading is followed by one too. With
+     * [todo] the new Heading gets the current Heading's active TODO Keyword, or else the first keyword of the first TODO
+     * Sequence (Emacs `org-insert-todo-heading-respect-content`).
+     */
+    fun insertHeadingAfterSubtree(snapshot: OrgSnapshot, offset: Int, todo: Boolean = false): EditResult {
+        val text = snapshot.text
+        val heading = snapshot.headingAt(offset)
+        val at = heading?.end ?: snapshot.headings.firstOrNull()?.start ?: text.length
+        val lineBreak = snapshot.lineBreakAt(offset)
+        val keyword = if (todo) todoKeyword(snapshot, heading)?.let { "$it " }.orEmpty() else ""
+        val line = "*".repeat(heading?.level ?: 1) + " " + keyword
+        val atLineStart = at == 0 || text[at - 1] == '\n'
+        val blankAfter = at < text.length && endsWithBlankLine(text, at)
+        val before = if (atLineStart) "" else lineBreak
+        val inserted = before + line + lineBreak + (if (blankAfter) lineBreak else "")
+        return EditResult.Applied(listOf(TextEdit(at, at, inserted)), caret = at + before.length + line.length)
+    }
+
+    private fun todoKeyword(snapshot: OrgSnapshot, heading: OutlineHeading?): String? {
+        val current = heading?.keyword?.let { snapshot.text.substring(it.startOffset, it.endOffset) }
+        val sequences = snapshot.todoSequences
+        return current?.takeIf { sequences.classify(it) == TodoSequences.Kind.ACTIVE } ?: sequences.next(null)
+    }
+
+    /** Whether the line ending right before [end] is blank. */
+    private fun endsWithBlankLine(text: CharSequence, end: Int): Boolean {
+        if (end == 0 || text[end - 1] != '\n') return false
+        var p = end - 1
+        while (p > 0 && text[p - 1] != '\n') {
+            if (!text[p - 1].isWhitespace()) return false
+            p--
+        }
+        return true
     }
 
     /** Swaps the Subtree with its previous same-level sibling. */

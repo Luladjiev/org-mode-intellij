@@ -31,9 +31,14 @@ enum class Refusal {
 sealed interface EditResult {
     /**
      * The smallest edits that perform the operation. [mapOffset] tells where an offset of the old text ends up,
-     * for carets and folds: through the edits by default, or along with a moved Subtree.
+     * for carets and folds: through the edits by default, or along with a moved Subtree. [caret], when set, is where
+     * the caret goes in the new text instead, such as on a new Heading.
      */
-    class Applied(val edits: List<TextEdit>, private val relocation: ((Int) -> Int?)? = null) : EditResult {
+    class Applied(
+        val edits: List<TextEdit>,
+        val caret: Int? = null,
+        private val relocation: ((Int) -> Int?)? = null,
+    ) : EditResult {
         fun mapOffset(offset: Int): Int {
             relocation?.invoke(offset)?.let { return it }
             var mapped = offset

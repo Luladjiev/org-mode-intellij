@@ -26,7 +26,7 @@ class EditFixtureTest {
             val expected = Carets.parse(Fixtures.read(Fixtures.expectedEdit(path)))
             val result = assertInstanceOf(EditResult.Applied::class.java, edit(operation, OrgSnapshot.parse(input.text), input.offsets))
             assertEquals(expected.text, result.edits.applyTo(input.text))
-            assertEquals(expected.offsets, input.offsets.map(result::mapOffset), "carets")
+            assertEquals(expected.offsets, result.caret?.let(::listOf) ?: input.offsets.map(result::mapOffset), "carets")
         }
     }
 
@@ -38,6 +38,8 @@ class EditFixtureTest {
         "move-subtree-up" -> StructureEdits.moveSubtreeUp(snapshot, carets.single())
         "move-subtree-down" -> StructureEdits.moveSubtreeDown(snapshot, carets.single())
         "cycle-level" -> StructureEdits.cycleLevel(snapshot, carets.single())
+        "insert-heading-after-subtree" -> StructureEdits.insertHeadingAfterSubtree(snapshot, carets.single())
+        "insert-todo-heading-after-subtree" -> StructureEdits.insertHeadingAfterSubtree(snapshot, carets.single(), todo = true)
         "cycle-todo" -> TodoEdits.cycle(snapshot, carets)
         "toggle-checkbox" -> CheckboxEdits.toggle(snapshot, carets)
         else -> error("Unknown operation directory $operation")

@@ -1,0 +1,9 @@
+* A
+** TODO [#A] B :tag:
+SCHEDULED: <2026-01-01 Thu>
+:PROPERTIES:
+:ID: x
+:END:
+*** C
+** <caret>
+** D

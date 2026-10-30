@@ -27,11 +27,14 @@
     ("move-subtree-up" org-move-subtree-up heading)
     ("move-subtree-down" org-move-subtree-down heading)
     ("toggle-checkbox" org-toggle-checkbox line)
-    ("cycle-level" org-cycle-level heading))
+    ("cycle-level" org-cycle-level heading)
+    ("insert-heading-after-subtree" org-insert-heading-respect-content line)
+    ("insert-todo-heading-after-subtree" org-insert-todo-heading-respect-content line))
   "OPERATION directory, Emacs command, and what several carets are deduplicated by.")
 
 (defconst check-edit-fixtures-known
   '("cycle-todo/todo-to-done"          ; Emacs normalizes `*   TODO   x' to single spaces
+    "insert-heading-after-subtree/before-first-heading" ; Emacs adds a blank line after the new Heading
     "promote-heading/from-body"        ; Emacs promotes only from the Heading line
     "toggle-checkbox/nested"           ; Emacs also checks the parent once all its children are checked
     "toggle-checkbox/states")          ; Emacs turns lowercase `[x]' into `[X]', the plugin unchecks it

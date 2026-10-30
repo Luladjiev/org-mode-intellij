@@ -94,6 +94,10 @@
             <action id="org.mode.CycleLevel" class="com.luladjiev.orgmode.actions.CycleLevelAction"/>
             <action id="org.mode.MoveSubtreeUp" class="com.luladjiev.orgmode.actions.MoveSubtreeUpAction"/>
             <action id="org.mode.MoveSubtreeDown" class="com.luladjiev.orgmode.actions.MoveSubtreeDownAction"/>
+            <action id="org.mode.InsertHeadingAfterSubtree"
+                    class="com.luladjiev.orgmode.actions.InsertHeadingAfterSubtreeAction"/>
+            <action id="org.mode.InsertTodoHeadingAfterSubtree"
+                    class="com.luladjiev.orgmode.actions.InsertTodoHeadingAfterSubtreeAction"/>
             <separator/>
             <action id="org.mode.CycleTodo" class="com.luladjiev.orgmode.actions.CycleTodoAction"/>
             <action id="org.mode.ToggleCheckbox" class="com.luladjiev.orgmode.actions.ToggleCheckboxAction"/>

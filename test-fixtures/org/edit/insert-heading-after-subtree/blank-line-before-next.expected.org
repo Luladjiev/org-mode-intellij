@@ -1,0 +1,6 @@
+* A
+body
+
+* <caret>
+
+* B

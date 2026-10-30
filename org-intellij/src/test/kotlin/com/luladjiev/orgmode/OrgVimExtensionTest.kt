@@ -197,6 +197,19 @@ class OrgVimExtensionTest : BasePlatformTestCase() {
         assertTextMatches("\\* A\n\\*\\* B\n\\*\\* x[ \t]+\n")
     }
 
+    /** As Doom Emacs's `C-RET`: a Heading after the Subtree, typed into in Insert mode, from Normal or Insert mode. */
+    fun testInsertHeadingAfterSubtreeEntersInsertMode() {
+        setIntegration(true)
+        userMap("<C-CR>", "<Plug>(org-insert-heading-after-subtree)")
+        userMap("<C-CR>", "<Plug>(org-insert-todo-heading-after-subtree)", MappingMode.I)
+        myFixture.configureByText("notes.org", "* A\n** B\nb<caret>ody\n*** C\n** D\n")
+
+        type("<C-CR>x")
+        assertEquals("* A\n** B\nbody\n*** C\n** x\n** D\n", myFixture.editor.document.text)
+        type("<C-CR>y<Esc>")
+        assertEquals("* A\n** B\nbody\n*** C\n** x\n** TODO y\n** D\n", myFixture.editor.document.text)
+    }
+
     /** The motions follow Emacs `C-c C-n/p/f/b/u`, take a count and stop at the last possible move. */
     fun testNavigationMappingsMoveBetweenHeadings() {
         setIntegration(true)

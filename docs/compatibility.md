@@ -28,6 +28,7 @@ fails on any difference not listed here, or on a listed one that no longer diffe
 |---|---|---|---|
 | Any edit of a Heading with tags | re-aligns the tags to `org-tags-column` | leaves spacing as written | Preserve unrelated formatting. |
 | TODO cycling on `*   TODO   x` | normalizes to one space around the keyword | changes only the keyword | Same. |
+| Insert Heading After Subtree before the first Heading | adds a level-1 Heading after the paragraph at point, followed by a blank line | adds it right before the first Heading, followed by a blank line only if one ends the text before it | One rule for the text before the first Heading and for a Subtree. |
 | Promote/Demote Heading with the caret in a Section | `M-←`/`M-→` move by word; promotion needs point on the Heading line (`org-metaleft`) | promotes or demotes the Heading the Section belongs to | The actions act on the Subtree around the caret. |
 | `#+TYP_TODO` keywords | type semantics: a fresh Heading starts with a type keyword, repeated cycling jumps to done | cycle like `#+SEQ_TODO` | Type workflows are v0.2. |
 | Toggling `[ ]` in a list whose siblings are all checked | also checks the parent item and updates `[n/m]` cookies | only the toggled checkbox changes | Statistics are v0.2. |

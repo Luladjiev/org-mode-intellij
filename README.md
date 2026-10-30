@@ -16,7 +16,7 @@ Status: v0.1 in development. See [CHANGELOG.md](CHANGELOG.md).
 - **Folding**: Subtrees, Sections, drawers and blocks, with Emacs-style visibility cycling. TAB on a Heading line cycles
   folded → children → subtree; Shift+TAB on a Heading line cycles the document: overview → contents → show all.
 - **Structure View**: the Headings, nested by level, with TODO Keyword, priority and tags.
-- **Structural editing**: promote/demote a Heading or a whole Subtree, move a Subtree up or down among its siblings
+- **Structural editing**: insert a Heading (or TODO Heading) after the current Subtree, promote/demote a Heading or a whole Subtree, move a Subtree up or down among its siblings
   (also with Move Statement Up/Down on a Heading line), cycle the TODO Keyword, toggle a checkbox. Each is one undoable
   command and edits only the lines it has to.
 - **Navigation**: next/previous visible Heading, next/previous sibling, parent Heading.

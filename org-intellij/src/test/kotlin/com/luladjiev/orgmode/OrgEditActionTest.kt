@@ -29,12 +29,15 @@ class OrgEditActionTest : BasePlatformTestCase() {
             myFixture.configureByText("case$i.org", input.readText())
             val before = myFixture.editor.document.text
             myFixture.performEditorAction(actionId)
-            try {
-                myFixture.checkResult(Files.readString(expected))
+            val caretMovedOffLineEnd = try {
+                checkResultAllowingNormalModeCaret(Files.readString(expected))
             } catch (e: Throwable) {
                 throw AssertionError("$actionId on ${input.parent.name}/${input.name}", e)
             }
             undo()
+            // IdeaVim moving the caret off the end of a line adds an undo step of the same name; Promote Heading from
+            // the end of a Heading line has one too.
+            if (caretMovedOffLineEnd) undo()
             assertEquals("Undo of $actionId on ${input.name}", before, myFixture.editor.document.text)
         }
     }
@@ -42,7 +45,7 @@ class OrgEditActionTest : BasePlatformTestCase() {
     fun testActionsAreRegisteredInTheCodeMenu() {
         val ids = listOf(
             "PromoteHeading", "PromoteSubtree", "DemoteHeading", "DemoteSubtree", "CycleLevel", "MoveSubtreeUp", "MoveSubtreeDown",
-            "CycleTodo", "ToggleCheckbox", "CycleVisibility", "CycleGlobalVisibility", "NextHeading",
+            "InsertHeadingAfterSubtree", "InsertTodoHeadingAfterSubtree", "CycleTodo", "ToggleCheckbox", "CycleVisibility", "CycleGlobalVisibility", "NextHeading",
             "PreviousHeading", "NextSibling", "PreviousSibling", "ParentHeading",
         ).map { "org.mode.$it" }
         val manager = ActionManager.getInstance()
@@ -83,6 +86,17 @@ class OrgEditActionTest : BasePlatformTestCase() {
         myFixture.performEditorAction("org.mode.MoveSubtreeUp")
         myFixture.checkResult("* <caret>B\nb\n\n* A\na\n\n")
         assertEquals(listOf("\nb\n"), myFixture.collapsedTexts())
+    }
+
+    /** The new Heading goes after the folded Subtree, which stays folded, and is visible. */
+    fun testInsertHeadingAfterAFoldedSubtree() {
+        myFixture.configureByText("a.org", "* <caret>A\n** A1\nbody\n\n* B\n")
+        myFixture.buildFolding()
+        myFixture.collapse("\n** A1\nbody\n")
+        myFixture.performEditorAction("org.mode.InsertHeadingAfterSubtree")
+        checkResultAllowingNormalModeCaret("* A\n** A1\nbody\n\n* <caret>\n\n* B\n")
+        assertEquals(listOf("\n** A1\nbody\n"), myFixture.collapsedTexts())
+        assertFalse(myFixture.editor.foldingModel.isOffsetCollapsed(myFixture.caretOffset))
     }
 
     /** As Emacs: TAB at the end of an empty Heading cycles its level, in Insert mode and with TAB cycling off too. */
@@ -154,6 +168,21 @@ class OrgEditActionTest : BasePlatformTestCase() {
         // Before the first Heading, Next Sibling goes to it.
         myFixture.editor.caretModel.moveToOffset(0)
         go("NextSibling", "* A")
+    }
+
+    /**
+     * IdeaVim's Normal mode keeps the caret off the end of a line, so a single caret expected at the end of a non-empty
+     * line may be on its last character instead. Returns whether it was.
+     */
+    private fun checkResultAllowingNormalModeCaret(expected: String): Boolean {
+        val marker = "<caret>"
+        val at = expected.indexOf(marker)
+        val atLineEnd = at > 0 && expected[at - 1] != '\n' && expected.indexOf(marker, at + 1) < 0 &&
+            (at + marker.length == expected.length || expected[at + marker.length] == '\n')
+        val text = expected.replace(marker, "")
+        if (atLineEnd && myFixture.caretOffset == at - 1 && myFixture.editor.document.text == text) return true
+        myFixture.checkResult(expected)
+        return false
     }
 
     private fun undo() {
