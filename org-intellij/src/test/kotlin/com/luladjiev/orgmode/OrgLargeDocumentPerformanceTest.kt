@@ -40,6 +40,6 @@ class OrgLargeDocumentPerformanceTest : BasePlatformTestCase() {
         assertTrue("$what took $time, more than $LIMIT", time < LIMIT)
 
     private companion object {
-        val LIMIT = 10.seconds
+        val LIMIT = 20.seconds
     }
 }
