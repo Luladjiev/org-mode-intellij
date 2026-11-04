@@ -1,9 +1,4 @@
 <list>
-  <option name="ORG_HEADING_1">
-    <value>
-      <option name="FOREGROUND" value="00627A"/>
-    </value>
-  </option>
   <option name="ORG_TODO_KEYWORD">
     <value>
       <option name="FOREGROUND" value="C62828"/>
