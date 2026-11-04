@@ -1,0 +1,11 @@
+| Name        | Value |
+|-------------+-------|
+| a           | *1*   |
+| [[x][link]] | 2     |
+#+TBLFM: $2=$1
+
+  | indented | table |
+  |-
+
+Text.
+| after text |

@@ -1,0 +1,8 @@
+Preamble
+* Fi<caret>rst
+body
+** Child
+- item
+*** Grandchild
+* Second
+** Not moved

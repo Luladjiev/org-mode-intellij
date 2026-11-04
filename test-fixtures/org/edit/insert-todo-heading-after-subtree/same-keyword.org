@@ -1,0 +1,4 @@
+#+TODO: NEXT WAIT | DONE
+* A
+** WAIT B<caret>
+** C

@@ -1,0 +1,35 @@
+- First
+- Second
+  continued
+- [ ] Unchecked
+- [X] Checked
+- [-] Partial
+- [x] Lowercase is not a checkbox
++ Plus bullet in the same list
+
+Paragraph.
+1. One
+2) Two
+   - Nested
+     * Deeper star
+   - Nested two
+
+   Paragraph after a blank line in item two
+3. Three
+
+- Blank line between items
+
+- still the same list
+
+
+- Two blank lines started a new list
+Text at column zero ends the list.
+-
+- Empty bullet above
+	- Tab indented
+- Back
+  #+BEGIN_QUOTE
+  A block in an item
+  #+END_QUOTE
+  | a table | in an item |
+- Last

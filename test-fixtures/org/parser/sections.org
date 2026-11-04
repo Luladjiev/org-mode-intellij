@@ -1,0 +1,36 @@
+#+TITLE: Sections and paragraphs
+#+AUTHOR: Test
+Text in the zeroth section.
+It spans two lines.
+
+#+STARTUP: overview
+# A comment line
+# continues here
+#comment without a space is text
+
+: fixed width
+: continues
+:no space is text
+
+-----
+---- four dashes are text
+
+#+NAME: affiliated
+A named paragraph.
+
+#+NAME: orphan
+
+#+key:
+Paragraph with *bold*, /italic/, _underline_, +strike+, =verbatim= and ~code~.
+A [[https://orgmode.org][link]], a [[file:notes.org]] link and https://example.com plain.
+A footnote reference[fn:1], an entity \alpha, a macro {{{date}}} and src_python{1+1} stay inline.
+SCHEDULED: <2026-10-28 Wed> inside a paragraph is text.
+#+unknown-directive without a colon is text
+* Heading
+Body.
+
+
+* Heading with only blank lines
+
+
+* Heading without body

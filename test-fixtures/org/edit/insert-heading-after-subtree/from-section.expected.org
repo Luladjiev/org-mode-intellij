@@ -1,0 +1,6 @@
+* A
+** B
+*** C
+c body
+*** <caret>
+** D

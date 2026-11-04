@@ -1,0 +1,40 @@
+* TODO Planning and properties
+SCHEDULED: <2026-10-28 Wed> DEADLINE: <2026-10-30 Fri>
+:PROPERTIES:
+:ID:       55d0e9a0
+:EFFORT:   2:00
+:EMPTY:
+:VALUE+:   more
+:END:
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2026-10-27 Tue 10:00]
+:INNER:
+:END:
+Body text.
+* Properties without planning
+:PROPERTIES:
+:CATEGORY: work
+:END:
+* A property drawer after text is a drawer
+Text first.
+:PROPERTIES:
+:ID: x
+:END:
+* Invalid property drawer
+:PROPERTIES:
+:ID: 1
+not a property
+:END:
+* Unterminated drawer
+:NOTES:
+This drawer has no end.
+* Lowercase end
+:NOTES:
+inside
+:end:
+* Planning not on the first line
+Text.
+CLOSED: [2026-10-27 Tue 10:00]
+* Blank line before planning
+
+DEADLINE: <2026-11-01 Sun>

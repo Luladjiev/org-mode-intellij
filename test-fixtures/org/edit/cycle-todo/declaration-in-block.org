@@ -1,0 +1,8 @@
+#+BEGIN_SRC org
+#+TODO: WAIT | FINISHED
+#+END_SRC
+#+BEGIN_EXAMPLE
+#+SEQ_TODO: NEXT | CANCELLED
+#+END_EXAMPLE
+* TODO Existing <caret>task
+* New <caret>task

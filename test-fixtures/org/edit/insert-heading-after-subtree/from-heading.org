@@ -1,0 +1,6 @@
+* A
+** B<caret> text
+body
+*** C
+body c
+** D

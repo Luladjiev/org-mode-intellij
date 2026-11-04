@@ -1,0 +1,36 @@
+<list>
+  <option name="ORG_TODO_KEYWORD">
+    <value>
+      <option name="FOREGROUND" value="E06C75"/>
+      <option name="FONT_TYPE" value="1"/>
+    </value>
+  </option>
+  <option name="ORG_DONE_KEYWORD">
+    <value>
+      <option name="FOREGROUND" value="98C379"/>
+      <option name="FONT_TYPE" value="1"/>
+    </value>
+  </option>
+  <option name="ORG_BOLD">
+    <value>
+      <option name="FONT_TYPE" value="1"/>
+    </value>
+  </option>
+  <option name="ORG_ITALIC">
+    <value>
+      <option name="FONT_TYPE" value="2"/>
+    </value>
+  </option>
+  <option name="ORG_UNDERLINE">
+    <value>
+      <option name="EFFECT_COLOR" value="A0A0A0"/>
+      <option name="EFFECT_TYPE" value="1"/>
+    </value>
+  </option>
+  <option name="ORG_STRIKE_THROUGH">
+    <value>
+      <option name="EFFECT_COLOR" value="A0A0A0"/>
+      <option name="EFFECT_TYPE" value="3"/>
+    </value>
+  </option>
+</list>

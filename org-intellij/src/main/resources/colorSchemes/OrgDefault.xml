@@ -1,0 +1,41 @@
+<list>
+  <option name="ORG_HEADING_1">
+    <value>
+      <option name="FOREGROUND" value="00627A"/>
+    </value>
+  </option>
+  <option name="ORG_TODO_KEYWORD">
+    <value>
+      <option name="FOREGROUND" value="C62828"/>
+      <option name="FONT_TYPE" value="1"/>
+    </value>
+  </option>
+  <option name="ORG_DONE_KEYWORD">
+    <value>
+      <option name="FOREGROUND" value="2E7D32"/>
+      <option name="FONT_TYPE" value="1"/>
+    </value>
+  </option>
+  <option name="ORG_BOLD">
+    <value>
+      <option name="FONT_TYPE" value="1"/>
+    </value>
+  </option>
+  <option name="ORG_ITALIC">
+    <value>
+      <option name="FONT_TYPE" value="2"/>
+    </value>
+  </option>
+  <option name="ORG_UNDERLINE">
+    <value>
+      <option name="EFFECT_COLOR" value="808080"/>
+      <option name="EFFECT_TYPE" value="1"/>
+    </value>
+  </option>
+  <option name="ORG_STRIKE_THROUGH">
+    <value>
+      <option name="EFFECT_COLOR" value="808080"/>
+      <option name="EFFECT_TYPE" value="3"/>
+    </value>
+  </option>
+</list>

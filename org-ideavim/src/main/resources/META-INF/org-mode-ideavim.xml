@@ -1,0 +1,13 @@
+<!-- Loaded only when IdeaVim is installed and enabled (optional dependency in plugin.xml). -->
+<idea-plugin>
+    <extensions defaultExtensionNs="IdeaVIM">
+        <vimExtension implementation="com.luladjiev.orgmode.ideavim.OrgVimExtension" name="orgmode">
+            <aliases>
+                <alias name="org-mode"/>
+            </aliases>
+        </vimExtension>
+    </extensions>
+    <extensions defaultExtensionNs="com.luladjiev.org-mode">
+        <insertModeProvider implementation="com.luladjiev.orgmode.ideavim.IdeaVimInsertModeProvider"/>
+    </extensions>
+</idea-plugin>

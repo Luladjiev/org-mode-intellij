@@ -1,0 +1,7 @@
+* A
+** B text
+body
+*** C
+body c
+** <caret>
+** D

@@ -1,0 +1,8 @@
+#+TODO: NEXT WAIT | FINISHED
+#+SEQ_TODO: BUG | FIXED
+* NEXT <caret>a
+* WAIT <caret>b
+* FINISHED <caret>c
+* BUG <caret>d
+* FIXED <caret>e
+* TODO <caret>f

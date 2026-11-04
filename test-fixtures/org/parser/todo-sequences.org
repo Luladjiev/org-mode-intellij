@@ -1,0 +1,17 @@
+#+TITLE: Custom workflows
+#+TODO: TODO(t) NEXT(n) WAITING(w@/!) | DONE(d!) CANCELLED(c@)
+#+SEQ_TODO: DRAFT REVIEW | PUBLISHED
+#+TYP_TODO: Alice Bob
+
+* TODO First
+* NEXT Second
+* WAITING Third
+* DONE Fourth
+* CANCELLED Fifth
+* DRAFT Article
+* PUBLISHED Article
+* Alice Assigned
+* Bob The last keyword without a bar is done
+* todo Keywords are case-sensitive
+* NEXTSTEP is not a keyword
+* NEXT [#C] Keyword, priority and tags :x:

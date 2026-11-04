@@ -1,0 +1,10 @@
+* Parent
+** A
+a body
+
+** B
+b <caret>body
+*** B child
+
+
+** C
