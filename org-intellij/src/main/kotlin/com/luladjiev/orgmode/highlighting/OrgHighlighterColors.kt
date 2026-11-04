@@ -14,10 +14,10 @@ import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributes
  */
 object OrgHighlighterColors {
     /**
-     * Heading levels 1–8; deeper levels cycle, as in Emacs. Each falls back to a language color that the bundled
-     * Light, Dark, Classic Light and Darcula schemes and common theme plugins all set, so no level renders as plain
-     * text (Emacs' choices, such as variable or type names, are uncolored in some of them; instance fields are plain
-     * in Catppuccin).
+     * Heading levels 1–8; deeper levels cycle, as in Emacs. Each inherits a language color that the bundled Light,
+     * Dark and Darcula schemes and common theme plugins set (Emacs' choices, such as variable or type names, are
+     * uncolored in some of them; instance fields are plain in Catppuccin). Classic Light leaves function declarations
+     * plain, so level 1 is plain there.
      */
     val HEADING_LEVELS: List<TextAttributesKey> = listOf(
         DefaultLanguageHighlighterColors.FUNCTION_DECLARATION,

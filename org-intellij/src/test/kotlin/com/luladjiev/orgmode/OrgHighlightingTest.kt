@@ -3,6 +3,7 @@ package com.luladjiev.orgmode
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.EditorColorsManager
+import com.intellij.openapi.editor.colors.impl.AbstractColorsScheme
 import com.intellij.openapi.editor.ex.EditorEx
 import com.intellij.openapi.editor.markup.EffectType
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
@@ -65,16 +66,32 @@ class OrgHighlightingTest : BasePlatformTestCase() {
         assertEquals(EffectType.STRIKEOUT, scheme.getAttributes(OrgHighlighterColors.STRIKE_THROUGH).effectType)
     }
 
-    /** Every Heading level must stand out from body text in the bundled schemes. */
+    /**
+     * Every Heading level must stand out from body text in the bundled schemes, except level 1 in Classic Light:
+     * it inherits Function declaration, which Classic Light leaves plain.
+     */
     fun testHeadingLevelsAreColoredInBundledSchemes() {
         val manager = EditorColorsManager.getInstance()
         for (name in listOf(EditorColorsManager.DEFAULT_SCHEME_NAME, "Darcula")) {
             val scheme = manager.getScheme(name)!!
             val text = scheme.getAttributes(HighlighterColors.TEXT).foregroundColor ?: scheme.defaultForeground
             for ((i, key) in OrgHighlighterColors.HEADING_LEVELS.withIndex()) {
+                if (name == EditorColorsManager.DEFAULT_SCHEME_NAME && i == 0) continue
                 val color = scheme.getAttributes(key).foregroundColor
                 assertNotNull("$name level ${i + 1} has no color", color)
                 assertFalse("$name level ${i + 1} looks like body text", color == text)
+            }
+        }
+    }
+
+    /** Headings inherit theme colors, so Settings | Color Scheme shows "Inherit values from" checked. */
+    fun testHeadingLevelsInheritInBundledSchemes() {
+        val manager = EditorColorsManager.getInstance()
+        for (name in listOf(EditorColorsManager.DEFAULT_SCHEME_NAME, "Darcula")) {
+            val scheme = manager.getScheme(name) as AbstractColorsScheme
+            for ((i, key) in OrgHighlighterColors.HEADING_LEVELS.withIndex()) {
+                val own = scheme.getDirectlyDefinedAttributes(key)
+                assertTrue("$name level ${i + 1} sets its own color", own == null || own === AbstractColorsScheme.INHERITED_ATTRS_MARKER)
             }
         }
     }
