@@ -3,7 +3,7 @@
 # - Run the 'check' task on Linux, Windows and macOS and upload test reports on failure.
 # - Run the IdeaVim tests against the oldest supported IdeaVim and an unsupported one.
 # - Run the 'verifyPluginStructure' and 'verifyPlugin' tasks and upload Plugin Verifier reports.
-# - Create a draft GitHub release on non-pull-request runs.
+# - Create a draft GitHub release with the plugin ZIP attached on non-pull-request runs.
 #
 # The workflow is triggered on pushes to the 'main' branch and on pull_request events.
 #
@@ -225,6 +225,13 @@ jobs:
         with:
           cache-read-only: true
 
+      # Download the plugin ZIP built by the Build job
+      - name: Download Plugin
+        uses: actions/download-artifact@v8
+        with:
+          name: plugin-distribution
+          path: dist
+
       # Remove old release drafts by using the curl request for the available releases with a draft flag
       - name: Remove Old Release Drafts
         env:
@@ -247,4 +254,5 @@ jobs:
           gh release create $VERSION \
             --draft \
             --title $VERSION \
-            --notes-file $RELEASE_NOTE
+            --notes-file $RELEASE_NOTE \
+            dist/*.zip
